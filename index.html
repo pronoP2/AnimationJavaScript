@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <title>X3D Assignment</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			html {
+				overflow: hidden;
+			}
+		</style>
+    </head>
+    <body>
+        <script src="three.min.js"></script>
+        <script src="OrbitControls.js"></script>
+		<script src="THREEx.WindowResize.js"></script>
+        <script src="Tutorial_Sky_box.js"></script>
+		<script src="OBJLoader.js"></script>
+		<script src='Tween.js'></script>
+
+		<video id="video" autoplay style="display:none">
+			<source src="VID.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+			<!--<source src="textures/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>-->
+		</video>
+		<div>
+			<button onclick="ONOFF()" id="on">Light ON/OFF</button>
+			<button onclick="lightIntens()" id="intensity">Light Intensity</button>
+			<button onclick="lightDir()" id="direction">Light Direction</button>
+			<button onclick="lightColor()" id="colour">Light Colour</button>
+			<button onclick="cameraClick()" id="change">Change Camera</button>
+		</div>
+
+		<!-- skybox shaders -->
+<script type="application/x-glsl" id="vertexShader">
+varying vec2 vUV;
+
+void main() {
+  vUV = uv;
+  vec4 pos = vec4(position, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * pos;
+}
+</script>
+
+<script type="application/x-glsl" id="fragmentShader">
+uniform sampler2D texture;
+varying vec2 vUV;
+
+void main() {
+  vec4 sample = texture2D(texture, vUV);
+  gl_FragColor = vec4(sample.xyz, sample.w);
+}
+</script>
+<!-- /skybox shaders -->
+
+
+    </body>
+</html>
